@@ -112,6 +112,12 @@ The arguments are explained below:
 - `num_batch_threads`: The degree of parallelism, i.e. the maximum number of batches processed concurrently.
 max_enqueued_batches: The number of batches worth of tasks that can be enqueued to the scheduler. Used to bound queueing delay, by turning away requests that would take a long time to get to, rather than building up a large backlog.
 
+10. Copy `batching.txt` to the docker container
+
+```
+docker cp bactching.txt nameofdockercontainer:/tensorflow-serving/
+```
+
 9. Get inside the docker container.
 
 ```
@@ -126,6 +132,18 @@ tensorflow_model_server \
 --rest_api_port=4001 \
 --model_config_file=config.conf &> logs &
 ```
+
+If we are using batching then run
+
+```
+tensorflow_model_server \
+--port=4000 \
+--rest_api_port=4001 \
+--enable_batching=true
+--batching_parameters_file=batching.txt
+--model_config_file=config.conf &> logs &
+```
+
 
 We can give the following arguments to `tensorflow_model_server`:
 - `port`: Port to listen on for gRPC API
