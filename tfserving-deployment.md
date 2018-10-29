@@ -85,7 +85,7 @@ models/
 │       ├── saved_model.pb
 │       └── variables
 │           ├── variables.data-00000-of-00001
-│       ├── saved_model.pb
+│           └── variables.index
 
 ```
 
