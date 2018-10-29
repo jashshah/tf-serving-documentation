@@ -138,3 +138,9 @@ We can give the following arguments to `tensorflow_model_server`:
 - `per_process_gpu_memory_fraction`: Fraction that each process occupies of the GPU memory space the value is between 0.0 and 1.0 (with 0.0 as the default) If 1.0, the server will allocate all the memory when the server starts, If 0.0, Tensorflow will automatically select a value.
 - `grpc_channel_arguments`: A comma separated list of arguments to be passed to the grpc server. (e.g. grpc.max_connection_age_ms=2000)
 - `enable_model_warmup`: Enables model warmup, which triggers lazy initializations (such as TF optimizations) at load time, to reduce first request latency.
+
+11. The server will be running at 
+- `localhost:4001/v1/models/modelnumber1/versions/1:predict`
+- `localhost:4001/v1/models/modelnumber2/versions/1:predict`
+
+If hosted on a VM instance `localhost` can be replaced with the IP address of the the instance.
