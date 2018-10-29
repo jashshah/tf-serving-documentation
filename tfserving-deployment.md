@@ -11,7 +11,7 @@ docker pull tensorflow/serving:latest-devel-gpu
 ```
 docker run --runtime nvidia \
 --name nameofdockercontainer \
---restart=always
+--restart=always \
 -it \
 -p 4000:4000 \
 -p 4001:4001 \
