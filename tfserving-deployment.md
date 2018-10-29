@@ -144,3 +144,25 @@ We can give the following arguments to `tensorflow_model_server`:
 - `localhost:4001/v1/models/modelnumber2/versions/1:predict`
 
 If hosted on a VM instance `localhost` can be replaced with the IP address of the the instance.
+
+## Some Handy Commands
+
+1. To check if server is running, enter the docker container and run
+
+```
+ps aux
+```
+
+2. To check what containers are running
+
+```
+docker ps 
+
+docker ps -a # to view stopped containers as well
+```
+
+3. To start a container
+
+```
+docker start nameofdockercontainer
+```
