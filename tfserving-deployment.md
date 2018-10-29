@@ -102,7 +102,6 @@ max_batch_size { value: 1024 }
 batch_timeout_micros { value: 0 }
 max_enqueued_batches { value: 1000000 }
 num_batch_threads { value: 8 }
-
 ```
 
 The arguments are explained below:
