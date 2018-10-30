@@ -162,6 +162,58 @@ We can give the following arguments to `tensorflow_model_server`:
 
 If hosted on a VM instance `localhost` can be replaced with the IP address of the the instance.
 
+## Deploying Model on Kubernetes
+
+1. Create a file named `Dockerfile` that replicates the steps we have taken to run the server
+
+```
+FROM tensorflow/serving:latest-devel-gpu
+
+RUN mkdir -p /tensorflow-serving/models
+COPY models /tensorflow-serving/models
+COPY config.conf /tensorflow-serving/
+COPY batching.txt /tensorflow-serving/
+
+EXPOSE 4000
+EXPOSE 4001
+
+CMD ["tensorflow_model_server", "--model_config_file=config.conf", "--port=4000","--rest_api_port=4001","--enable_batching=true","--batching_parameters_file=batching.txt","&", ">", "/tensorflow-serving/logs"]
+```
+
+2. Build a docker image using `Dockerfile`. Execute the below command from the directory where Dockerfile is created.
+
+```
+docker build -t dockerimagename:version .
+```
+Be careful of including the `dot(.)` at the end.
+
+3. Run the docker image
+
+```
+docker run --runtime nvidia \
+--name nameofcontainer \
+-d -p 4001:4001 \
+dockerimagename:version
+```
+
+4. Attach to this docker container
+
+```
+docker exec -it containerid bash
+```
+
+5. Tag the docker image
+
+```
+docker tag dockerimagename:version gcr.io/name-of-project/dockerimagename:version
+```
+
+6. Push the docker image to Google Container Registry
+
+```
+gcloud docker -- push gcr.io/name-of-project/dockerimagename:version
+```
+
 ## Some Handy Commands
 
 1. To check if server is running, enter the docker container and run
@@ -178,8 +230,16 @@ docker ps
 docker ps -a # to view stopped containers as well
 ```
 
-3. To start a container
+3. To start/stop a container
 
 ```
 docker start nameofdockercontainer
+
+docker stop nameofdockercontainer
+```
+
+4. To see the docker images created
+
+```
+docker images
 ```
